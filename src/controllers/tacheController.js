@@ -32,13 +32,16 @@ class TacheController {
     }
   }
 
-  // Basculer l'état "completed"
-  async toggleTache(req, res) {
+  // update tache
+  async updateTache(req, res) {
     try {
-      const tache = await TacheService.toggleTacheCompletion(req.params.id);
-      res.json(tache);
-    } catch (err) {
-      res.status(404).json({ message: err.message });
+      const tache = await TacheService.updateTache(req.params.id, req.body);
+      res.status(200).json(tache);
+    } catch (error) {
+      res.status(400).json({
+        message: "Erreur lors de la mise à jour",
+        error: error.message,
+      });
     }
   }
 

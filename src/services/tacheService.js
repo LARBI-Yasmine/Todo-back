@@ -1,4 +1,4 @@
-const Tache = require("../models/Tache");
+const Tache = require("../models/tache");
 
 class TacheService {
   async getAllTaches() {
@@ -10,15 +10,30 @@ class TacheService {
   }
 
   async createTache(data) {
-    const { title, date } = data;
-    const tache = new Tache({ title, date });
+    const { title, type, description, difficulte, estimation, date } = data;
+    const tache = new Tache({
+      title,
+      type,
+      description,
+      difficulte,
+      estimation,
+      date,
+    });
     return await tache.save();
   }
 
-  async toggleTacheCompletion(id) {
+  async updateTache(id, donnees) {
     const tache = await Tache.findById(id);
-    if (!tache) throw new Error("Tache not found");
-    tache.completed = !tache.completed;
+    if (!tache) throw new Error("Tâche introuvable");
+
+    // Mise à jour des champs
+    tache.title = donnees.title;
+    tache.type = donnees.type;
+    tache.description = donnees.description;
+    tache.difficulte = donnees.difficulte;
+    tache.estimation = donnees.estimation;
+    tache.date = donnees.date;
+
     return await tache.save();
   }
 
