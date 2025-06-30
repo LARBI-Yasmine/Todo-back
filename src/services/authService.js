@@ -2,7 +2,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-// Importation du model
 const User = require("../models/user");
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -14,7 +13,7 @@ class AuthService {
       throw new Error("Cet email est déjà utilisé.");
     }
 
-    const user = new User({ nom, email, password }); // Le password sera hashé dans le modèle
+    const user = new User({ nom, email, password });
     await user.save();
 
     return { id: user._id, nom: user.nom, email: user.email, role: user.role };
@@ -45,6 +44,10 @@ class AuthService {
         role: user.role,
       },
     };
+  }
+
+  async logout(req, res) {
+    return { message: "Déconnexion réussie." };
   }
 }
 

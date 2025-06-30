@@ -26,7 +26,6 @@ class TacheService {
     const tache = await Tache.findById(id);
     if (!tache) throw new Error("Tâche introuvable");
 
-    // Mise à jour des champs
     tache.title = donnees.title;
     tache.type = donnees.type;
     tache.description = donnees.description;

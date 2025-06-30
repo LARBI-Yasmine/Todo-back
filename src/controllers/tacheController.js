@@ -16,7 +16,7 @@ class TacheController {
     try {
       const tache = await TacheService.getTacheById(req.params.id);
       if (!tache) return res.status(404).json({ message: "Task not found" });
-      res.json(tache);
+      res.status(200).json(tache);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -24,6 +24,7 @@ class TacheController {
 
   // Créer une tâche
   async createTache(req, res) {
+    console.log(req.body);
     try {
       const tache = await TacheService.createTache(req.body);
       res.status(201).json(tache);
@@ -34,8 +35,12 @@ class TacheController {
 
   // update tache
   async updateTache(req, res) {
+    console.log(req.body);
     try {
-      const tache = await TacheService.updateTache(req.params.id, req.body);
+      const tache = await TacheService.updateTache(
+        req.params.id,
+        req.body.editForm
+      );
       res.status(200).json(tache);
     } catch (error) {
       res.status(400).json({
@@ -49,8 +54,9 @@ class TacheController {
   async deleteTache(req, res) {
     try {
       const result = await TacheService.deleteTache(req.params.id);
+      console.log(result);
       if (!result) return res.status(404).json({ message: "Task not found" });
-      res.json({ message: "Task deleted" });
+      res.status(204).send();
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

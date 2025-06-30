@@ -19,11 +19,19 @@ class AuthController {
     try {
       const { email, password } = req.body;
       const result = await authService.login(email, password, res);
-      res.status(200).json(result);
+      res.status(201).json(result);
     } catch (error) {
       res.status(401).json({ error: error.message });
     }
   }
-}
 
+  async logout(req, res) {
+    try {
+      const result = await authService.logout(req, res);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de la déconnexion." });
+    }
+  }
+}
 module.exports = new AuthController();
